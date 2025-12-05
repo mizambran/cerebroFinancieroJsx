@@ -1,6 +1,6 @@
 /* Cambiar fondo */
 
-const btnCambiarTema = document.getElementById(`btnCambiarTema`);
+/* const btnCambiarTema = document.getElementById(`btnCambiarTema`);
 
 function cambiarTema() {
   const html = document.documentElement;
@@ -20,6 +20,10 @@ function cambiarTema() {
 }
 
 btnCambiarTema.addEventListener("click", cambiarTema)
+
+
+
+ */
 
 
 
