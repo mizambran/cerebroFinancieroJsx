@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useEffect, useState } from "react";
 import ListadoUsuarios from "./ListadoUsuarios";
+import Swal from "sweetalert2";
+
 
 
 const Registrarse = () => {
@@ -18,7 +20,11 @@ const Registrarse = () => {
     setUsuarios([...usuarios, data])
 
     reset()
-
+    Swal.fire({
+  title: "Creaste un usuario nuevo! ",
+  icon: "success",
+  draggable: true
+});
     
   }
 

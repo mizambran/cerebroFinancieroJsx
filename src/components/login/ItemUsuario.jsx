@@ -1,6 +1,9 @@
 import Button from 'react-bootstrap/Button';
 import { FaPencilAlt } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa';
+import { FaLock } from 'react-icons/fa';
+import { FaCheck  } from 'react-icons/fa';
 
 const ItemUsuario = ({usuario, index, crearUsuario}) => {
   return (
@@ -10,11 +13,15 @@ const ItemUsuario = ({usuario, index, crearUsuario}) => {
     <td> {usuario.nombre} </td>
     <td> {usuario.email} </td>
     <td>{usuario.contraseña}</td>
-    <td className='d-flex justify-content-evenly' >
-    <Button variant="warning"><FaPencilAlt /></Button>
-    <Button variant="danger"><FaTrash /></Button>
+    <td  >
+    <Button variant='primary' className='me-2' ><FaEye /></Button>
+    <Button variant="warning" className='me-2'><FaPencilAlt /></Button>
+    <Button variant="danger" className='me-2'><FaTrash /></Button>
     </td>
-    <td></td>
+    <td >
+        <Button variant="success" className='me-2'><FaCheck /></Button>
+        <Button variant="secondary"  ><FaLock /></Button>
+    </td>
     </tr>
     </>
   )
