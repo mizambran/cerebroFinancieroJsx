@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form"
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useEffect, useState } from "react";
+import ListadoUsuarios from "./ListadoUsuarios";
 
 
 const Registrarse = () => {
@@ -21,14 +22,20 @@ const Registrarse = () => {
     
   }
 
+  
   useEffect(() => {
     localStorage.setItem("usuariosKey", JSON.stringify(usuarios))
   }, [usuarios])
 
+
+
+
+
     return (
+    <>
     <div className="container my-5">
 
-      <Form onSubmit={handleSubmit(crearUsuario)} >
+      <Form onSubmit={handleSubmit(crearUsuario)}  >
       <Form.Group className="mb-3" >
         <Form.Label>Nombre</Form.Label>
         <Form.Control type="text" placeholder="Ej: Juan" {...register("nombre", {
@@ -49,11 +56,15 @@ const Registrarse = () => {
 
       <Form.Group className="mb-3" >
         <Form.Label>Edad</Form.Label>
-        <Form.Control type="number" placeholder="Ej: 9" {...register("edad" , {
+        <Form.Control type="number" placeholder="Ej: 18" {...register("edad" , {
           required:"Este es un campo obligatorio",
           min:{
             value: 18,
             message: "Tienes que ser mayor de edad"
+          },
+          max:{
+            value: 90,
+            message:"Decime tu secreto para vivir tanto jaja"
           }
         })} />
         <Form.Text className="text-danger">
@@ -111,9 +122,12 @@ const Registrarse = () => {
         Registrar
       </Button>
     </Form>
-
-
     </div>
+    <div className="container mb-5">
+    <ListadoUsuarios usuarios={usuarios} crearUsuario={crearUsuario} />
+    </div>
+    
+    </>
   )
 }
 
