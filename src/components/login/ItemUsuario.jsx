@@ -5,7 +5,7 @@ import { FaEye } from 'react-icons/fa';
 import { FaLock } from 'react-icons/fa';
 import { FaCheck  } from 'react-icons/fa';
 
-const ItemUsuario = ({usuario, index, crearUsuario}) => {
+const ItemUsuario = ({usuario, index, crearUsuario, borrarUsuario}) => {
   return (
     <>
     <tr>
@@ -16,7 +16,7 @@ const ItemUsuario = ({usuario, index, crearUsuario}) => {
     <td  >
     <Button variant='primary' className='me-2' ><FaEye /></Button>
     <Button variant="warning" className='me-2'><FaPencilAlt /></Button>
-    <Button variant="danger" className='me-2'><FaTrash /></Button>
+    <Button variant="danger" className='me-2' onClick={() => borrarUsuario={usuario}} ><FaTrash /></Button>
     </td>
     <td >
         <Button variant="success" className='me-2'><FaCheck /></Button>
