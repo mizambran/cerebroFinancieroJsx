@@ -5,7 +5,7 @@ import Table from 'react-bootstrap/Table';
 
 
 
-const ListadoUsuarios = ({usuarios, crearUsuario}) => {
+const ListadoUsuarios = ({usuarios, crearUsuario, borrarUsuario}) => {
 
 
     return (
@@ -25,7 +25,7 @@ const ListadoUsuarios = ({usuarios, crearUsuario}) => {
         <tbody>
             
             {
-            usuarios.map((usuario, index) => <ItemUsuario usuario={usuario} index={index} crearUsuario={crearUsuario} /> )
+            usuarios.map((usuario, index) => <ItemUsuario usuario={usuario} index={index} crearUsuario={crearUsuario} borrarUsuario={borrarUsuario}/> )
         }
             
         </tbody>
