@@ -4,14 +4,38 @@ import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
 import ListadoUsuarios from "./ListadoUsuarios";
 import Swal from "sweetalert2";
+import ModalDetalleUsuario from "./ModalDetalleUsuario";
+
 
 const Registrarse = () => {
+  
+   /* EDITAR */
+  
+  const [estoyEditando, setEstoyEditando] = useState(false)
+  const [usuarioEditar, setUsuarioEditar] = useState(null)
+  
+    /* VER */
+
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
+
+  const verDetalleUsuario = (usuario) =>{
+    setUsuarioSeleccionado(usuario);
+    setMostrarModal(true)
+  };
+
+  const handleCloseModal = () =>{
+    setMostrarModal(false)
+    setUsuarioSeleccionado(null)
+  }
+  
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
     getValues,
+    setValue
   } = useForm();
 
   const usuariosLocalStorage =
@@ -19,16 +43,65 @@ const Registrarse = () => {
 
   const [usuarios, setUsuarios] = useState(usuariosLocalStorage);
 
-  const crearUsuario = (data) => {
-    setUsuarios([...usuarios, data]);
+  const crearYEditarUsuario = (data) => {
+    
+    if(estoyEditando){
 
-    reset();
-    Swal.fire({
-      title: "Creaste un usuario nuevo! ",
-      icon: "success",
-      draggable: true,
-    });
+      /* Cuando estoyEditando sea true, se ejecuta el codigo */
+      const listadoUsuariosActualizado = usuarios.map(usuario => usuario.email === usuarioEditar ? {...data, role: "usuario"} : usuario )
+    
+      setUsuarios(listadoUsuariosActualizado)
+      setEstoyEditando(false)
+      setUsuarioEditar(null)
+
+      Swal.fire({
+                title: "Usuario Actualizado!",
+                text: `${data.nombre} ha sido modificado.`,
+                icon: "success",
+            });
+
+    } else {
+
+      /* CREAR */  
+      const nuevoUsuario = {
+        ...data, role:"usuario"
+      }
+
+      setUsuarios([...usuarios, nuevoUsuario])
+
+      Swal.fire({
+          title: "Creaste un usuario!",
+          text: `${data.nombre_y_apellido_medico} esta habilitado.`,
+          icon: "success",
+        });
+
+        reset();
+
+    }
+        
   };
+
+
+  const modificarUsuario = (email) => {
+
+    const usuarioSeleccionado = usuarios.find((usuario) => usuario.email === email);
+
+    if(usuarioSeleccionado){
+
+      setEstoyEditando(true)
+      setUsuarioEditar(email)
+
+      setValue('nombre', usuarioSeleccionado.nombre)
+      setValue('edad', usuarioSeleccionado.edad)
+      setValue('email', usuarioSeleccionado.email)
+      setValue('contraseña', usuarioSeleccionado.contraseña)
+      setValue('contraseña_confirmar', usuarioSeleccionado.contraseña)
+
+      
+
+    }
+    
+  }
 
   useEffect(() => {
     localStorage.setItem("usuariosKey", JSON.stringify(usuarios));
@@ -52,8 +125,8 @@ const Registrarse = () => {
         setUsuarios(listadoUsuariosActualizado);
 
         Swal.fire({
-          title: "Médico Eliminado",
-          text: "El médico ha sido removido de la cartilla.",
+          title: "Usuario Eliminado",
+          text: "El Usuario ha sido removido de la lista.",
           icon: "success",
         });
       }
@@ -62,8 +135,9 @@ const Registrarse = () => {
 
   return (
     <>
+    <h1 className="text-center mt-5"> {estoyEditando ? "Editar Usuario" : "Registro Usuarios"} </h1>
       <div className="container my-5">
-        <Form onSubmit={handleSubmit(crearUsuario)}>
+        <Form onSubmit={handleSubmit(crearYEditarUsuario)}>
           <Form.Group className="mb-3">
             <Form.Label>Nombre</Form.Label>
             <Form.Control
@@ -164,14 +238,23 @@ const Registrarse = () => {
               {errors.contraseña_confirmar?.message}
             </Form.Text>
           </Form.Group>
-
-          <Button variant="primary" type="submit">
-            Registrar
+          <Button variant={estoyEditando ? "success" : "primary"} type="submit">
+            {estoyEditando ? "Guardar Cambios" : "Registrar"}
           </Button>
+          {estoyEditando && (
+           <Button variant="secondary" className="ms-2" onClick={() =>{
+            setEstoyEditando(false)
+            setUsuarioEditar(null)
+            reset()
+           }} >
+            Cancelar
+           </Button> 
+          )}
         </Form>
       </div>
       <div className="container mb-5">
-        <ListadoUsuarios usuarios={usuarios} crearUsuario={crearUsuario} borrarUsuario={borrarUsuario} />
+        <ListadoUsuarios usuarios={usuarios} verDetalleUsuario={verDetalleUsuario} borrarUsuario={borrarUsuario} modificarUsuario={modificarUsuario} />
+        <ModalDetalleUsuario show={mostrarModal} handleClose={handleCloseModal} usuario={usuarioSeleccionado} />
       </div>
     </>
   );
