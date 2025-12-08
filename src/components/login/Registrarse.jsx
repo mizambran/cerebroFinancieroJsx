@@ -209,11 +209,10 @@ const Registrarse = () => {
               placeholder="Ingresa una contraseña"
               {...register("contraseña", {
                 required: "Tienes que ingresar una contraseña",
-                pattern: {
-                  value:
-                    /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{6,12}$/,
+                minLength: {
+                  value:6,
                   message:
-                    "La contrasenia debe tener entre 6 y 16 caracteres, al menos un número, al menos una minuscula, al menos una mayuscula y al menos un caracter especial",
+                    "La contrasenia debe tener al menos 6 caracteres",
                 },
               })}
             />
