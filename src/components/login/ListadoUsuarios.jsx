@@ -1,11 +1,10 @@
-
 import ItemUsuario from './ItemUsuario';
 import Table from 'react-bootstrap/Table';
 
 
 
 
-const ListadoUsuarios = ({usuarios, crearUsuario, borrarUsuario}) => {
+const ListadoUsuarios = ({usuarios,verDetalleUsuario, borrarUsuario, modificarUsuario}) => {
 
 
     return (
@@ -25,7 +24,7 @@ const ListadoUsuarios = ({usuarios, crearUsuario, borrarUsuario}) => {
         <tbody>
             
             {
-            usuarios.map((usuario, index) => <ItemUsuario usuario={usuario} index={index} crearUsuario={crearUsuario} borrarUsuario={borrarUsuario}/> )
+            usuarios.map((usuario, index) => <ItemUsuario usuario={usuario} index={index} verDetalleUsuario={verDetalleUsuario}  borrarUsuario={borrarUsuario} modificarUsuario={modificarUsuario}/> )
         }
             
         </tbody>

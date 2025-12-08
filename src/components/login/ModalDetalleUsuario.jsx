@@ -1,9 +1,9 @@
 import { Modal, Button } from 'react-bootstrap';
 
-const ModalDetalleUsuario = ({ show, handleClose, medico }) => {
+const ModalDetalleUsuario = ({ show, handleClose, usuario }) => {
     
     // Si medico es null o undefined, no mostramos nada
-    if (!medico) {
+    if (!usuario) {
         return null; 
     }
 
@@ -14,11 +14,11 @@ const ModalDetalleUsuario = ({ show, handleClose, medico }) => {
                 <Modal.Title>Información Usuario</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h5>Dr/a {medico.nombre_y_apellido_medico}</h5>
+                <h5>{usuario.nombre}</h5>
                 <hr />
-                <p><strong>Especialidad:</strong> {medico.especialidad}</p>
-                <p><strong>Email:</strong> {medico.email_medico}</p>
-                <p><strong>Contraseña:</strong> {medico.contraseña}</p>
+                <p><strong>Edad:</strong> {usuario.edad}</p>
+                <p><strong>Email:</strong> {usuario.email}</p>
+                <p><strong>Contraseña:</strong> {usuario.contraseña}</p>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
